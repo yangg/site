@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "express": "^4.14.0",
+    "pug": "^2.0.0-beta4"
+  },
+  "name": "site",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index.js",
+    "dev": "NODE_ENV=dev nodemon index.js",
+    "dev-win": "set NODE_ENV=dev&&nodemon index.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yangg/site.git"
+  },
+  "author": "Brook Yang <uedsky@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/yangg/site/issues"
+  },
+  "homepage": "https://github.com/yangg/site#readme",
+  "description": ""
+}
