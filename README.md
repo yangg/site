@@ -1,2 +1,2 @@
-# My website
+# My personal website
 https://www.uedsky.com

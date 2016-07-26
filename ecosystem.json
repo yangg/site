@@ -1,0 +1,22 @@
+{
+  apps: {
+    name: "site",
+    script: "index.js",
+    watch: true,
+    env:
+      { NODE_ENV: "dev" },
+    env_production:
+      { NODE_ENV: "production" }
+  },
+
+  deploy : {
+    production : {
+      user : "brook",
+      host : "uedsky.com",
+      ref  : "origin/master",
+      repo : "https://github.com/yangg/site.git",
+      path : "/var/www/uedsky.site",
+      "post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production"
+    }
+  }
+}
