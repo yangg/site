@@ -12,6 +12,7 @@
     production : {
       user : "brook",
       host : "uedsky.com",
+      port:  "1223",
       ref  : "origin/master",
       repo : "https://github.com/yangg/site.git",
       path : "/var/www/uedsky.site",
