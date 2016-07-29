@@ -1,0 +1,9 @@
+extends: eslint:recommended
+env:
+  node: true
+  es6: true
+rules:
+  strict: [error]
+  no-console: [off]
+  indent: [error, 2]
+  complexity: [warn, 10]
