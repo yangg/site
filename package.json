@@ -11,8 +11,7 @@
     "eslint": "^3.1.1"
   },
   "scripts": {
-    "start": "pm2 start index.js --watch --name=site",
-    "test": "mocha"
+    "start": "pm2 start index.js --watch --name=site"
   },
   "repository": {
     "type": "git",
@@ -24,5 +23,5 @@
     "url": "https://github.com/yangg/site/issues"
   },
   "homepage": "https://github.com/yangg/site#readme",
-  "description": ""
+  "description": "My personal website"
 }

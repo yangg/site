@@ -23,11 +23,18 @@ app.get('/qr', function(req, res) {
   }
 
   res.type(options.type);
-  let text = req.query.text || req.get('Referrer');
+  let text = req.query.text;
+
+  // 同域的请求 text 为空时，使用 referrer
+  let errorMsg = '', referrer = req.get('Referrer');
+  let topDomain = req.hostname.replace(/.*?(?=\w+\.\w+$)/g, '');
+  if(!text && referrer && new RegExp('https?://(\\w+\\.)*' + topDomain + '\\b').test(referrer)) {
+    text = referrer;
+  }
   if(!text) {
     res.send(
 `<svg xmlns="http://www.w3.org/2000/svg" width="${options.size}" height="${options.size}" viewBox="0 0 ${options.size} ${options.size}">
-  <text x="50%" y="50%" text-anchor="middle">Missing parameter text</text>
+  <text x="50%" y="50%" text-anchor="middle">${errorMsg || 'Missing parameter text'}</text>
 </svg>`
     );
     res.end();

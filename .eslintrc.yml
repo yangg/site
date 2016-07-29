@@ -3,7 +3,9 @@ env:
   node: true
   es6: true
 rules:
-  strict: [error]
-  no-console: [off]
-  indent: [error, 2]
+  strict: error
+  no-console: off
+  indent: [error, 2, { SwitchCase: 1 }]
   complexity: [warn, 10]
+  eqeqeq: warn
+  spaced-comment: ["warn", "always"]
