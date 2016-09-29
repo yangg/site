@@ -15,7 +15,7 @@
       port:  "1223",
       ref  : "origin/master",
       repo : "https://github.com/yangg/site.git",
-      path : "/var/www/uedsky.site",
+      path : "/var/www/uedsky.www",
       "post-deploy" : "npm install --production && pm2 startOrRestart ecosystem.json --env production"
     }
   }

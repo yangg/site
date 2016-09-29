@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /qr
+Disallow: /api/

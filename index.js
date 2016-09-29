@@ -17,6 +17,19 @@ app.get('/', function (req, res) {
   res.render('index');
 });
 
+app.get('/pac/:alias*?', function (req, res) {
+  let host = req.params.alias || '127.0.0.1';
+  if(!isNaN(host)) {
+    host = '192.168.1.' + host;
+  }
+  let socks = req.headers['user-agent'].indexOf('CFNetwork') === -1 ? 'SOCKS5' : 'SOCKS';
+  let output = require('fs').readFileSync('views/black.pac');
+  var interpolate = new Function('host', 'socks',
+        'return `' + output + '`');
+  res.header("Content-Type", "application/x-ns-proxy-autoconfig");
+  res.end(interpolate(host, socks));
+});
+
 app.get('/qr', function(req, res) {
   let text = req.query.text;
 
