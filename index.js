@@ -23,12 +23,15 @@ app.get('/pac/:alias*?', function (req, res) {
     host = '192.168.1.' + host;
   }
   let socks = req.headers['user-agent'].indexOf('CFNetwork') === -1 ? 'SOCKS5' : 'SOCKS';
+
   let profile = req.query['p'] || 'black';
   let output = require('fs').readFileSync(`views/${profile}.pac`);
   let interpolate = new Function('host', 'socks',
         'return `' + output + '`');
+
   let contentType = !req.query['v'] ? "application/x-ns-proxy-autoconfig" : "text/plain";
-  res.header("Content-Type", contentType);
+  res.set("Content-Type", contentType);
+  res.set('Cache-Control', 'public, max-age=86400'); // cache 1 day
   res.end(interpolate(host, socks));
 });
 
@@ -78,7 +81,7 @@ app.get('/qr', function(req, res) {
   }
 
   var qr = require('qr-image');
-  res.setHeader('Cache-Control', 'public, max-age=31557600');
+  res.set('Cache-Control', 'public, max-age=31557600');
   options.size = options.size / 21;
   options.margin = options.margin / 10;
   var qrImage = qr.image(text, options);
