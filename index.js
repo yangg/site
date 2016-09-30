@@ -23,10 +23,12 @@ app.get('/pac/:alias*?', function (req, res) {
     host = '192.168.1.' + host;
   }
   let socks = req.headers['user-agent'].indexOf('CFNetwork') === -1 ? 'SOCKS5' : 'SOCKS';
-  let output = require('fs').readFileSync('views/black.pac');
-  var interpolate = new Function('host', 'socks',
+  let profile = req.query['p'] || 'black';
+  let output = require('fs').readFileSync(`views/${profile}.pac`);
+  let interpolate = new Function('host', 'socks',
         'return `' + output + '`');
-  res.header("Content-Type", "application/x-ns-proxy-autoconfig");
+  let contentType = !req.query['v'] ? "application/x-ns-proxy-autoconfig" : "text/plain";
+  res.header("Content-Type", contentType);
   res.end(interpolate(host, socks));
 });
 
