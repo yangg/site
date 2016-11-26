@@ -24,12 +24,22 @@ app.get('/pac/:alias*?', function (req, res) {
   }
   let socks = req.headers['user-agent'].indexOf('CFNetwork') === -1 ? 'SOCKS5' : 'SOCKS';
 
-  let profile = req.query['p'] || 'black';
-  let output = require('fs').readFileSync(`views/${profile}.pac`);
+  let profile = req.query.p || 'black';
+  let output;
+  if(profile === 'black0') { // all to proxy
+    output = 'function FindProxyForURL() {return "PROXY ${host}:8888;DIRECT"}';
+  } else {
+    const fs = require('fs');
+    if(fs.existsSync(`views/${profile}.pac`)) {
+      output = require('fs').readFileSync(`views/${profile}.pac`);
+    } else {  // profile not exist, go DIRECT
+      output = 'function FindProxyForURL() {return "DIRECT"}';
+    }
+  }
   let interpolate = new Function('host', 'socks',
         'return `' + output + '`');
 
-  let contentType = !req.query['v'] ? "application/x-ns-proxy-autoconfig" : "text/plain";
+  let contentType = !req.query.v ? "application/x-ns-proxy-autoconfig" : "text/plain";
   res.set("Content-Type", contentType);
   res.set('Cache-Control', 'public, max-age=86400'); // cache 1 day
   res.end(interpolate(host, socks));
